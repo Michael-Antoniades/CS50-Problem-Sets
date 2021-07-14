@@ -6,7 +6,7 @@
 long ccn;
 long numdigits;
 int numsumtot;
-int sum = 0;
+
 
 
 int main(void)
@@ -24,21 +24,18 @@ int main(void)
     else
     {
         long ccnmath = ccn; //not necessary but ccn math will be variable changing instead of ccn
-
+        int sum = 0;
         for (int i = 0; ccnmath != 0; i++, ccnmath /= 10)
         {
-
             if( i % 2 == 0 )
             {
                 sum += ccnmath % 10;
             }
-
             else
             {
                 int seperator = 2 * (ccn % 10);
                 sum += seperator / 10 + seperator % 10;
             }
-
         }
 
 
@@ -65,7 +62,9 @@ int main(void)
         else
         {
             printf("INVALID from Alrogrithm\n");
+            printf("%i\n", sum);
+
         }
     }
 }
-//close to being done but no cigar yet algorithm section off
+//close but no cigar yet
