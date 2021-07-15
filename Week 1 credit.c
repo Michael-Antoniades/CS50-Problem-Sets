@@ -23,13 +23,13 @@ int main(void)
 
     else
     {
-        long ccnmath = ccn; //not necessary but ccn math will be variable changing instead of ccn
+        long ccnholder = ccn; //will hold ccn's value
         int sum = 0;
-        for (int i = 0; ccnmath != 0; i++, ccnmath /= 10)
+        for (int i = 0; ccn != 0; i++, ccn /= 10)
         {
             if( i % 2 == 0 )
             {
-                sum += ccnmath % 10;
+                sum += ccn % 10;
             }
             else
             {
@@ -41,22 +41,22 @@ int main(void)
 
         if(sum % 10 == 0)
         {
-            if( (ccn >= 34e13 && ccn < 35e13) || (ccn >= 37e13 && ccn < 38e13) )
+            if( (ccnholder >= 34e15 && ccnholder < 35e13) || (ccnholder >= 37e15 && ccnholder < 38e15) )
             {
             printf("AMEX\n");
             }
-            else if( (ccn >= 4e12 && ccn < 5e12) || ( ccn>= 4e15 && ccn < 5e15) )
+            else if( (ccnholder >= 4e13 && ccn < 5e13) || ( ccnholder >= 4e16 && ccn < 5e16) )
             {
             printf("VISA\n");
             }
-            else if(ccn >= 51e14 && ccn < 56e14)
+            else if(ccn >= 51e16 && ccn < 56e16)
             {
             printf("MASTERCARD\n");
             }
             else
             {
             printf("INVALID front 2 numbers");
-            printf("%li\n", ccn);
+            printf("%li\n", ccnholder);
             }
         }
         else
@@ -67,4 +67,4 @@ int main(void)
         }
     }
 }
-//close but no cigar yet
+//correct needs testing
