@@ -18,7 +18,7 @@ int main(void)
 
     if(numdigits > 16 || numdigits < 13 || numdigits == 14)
     {
-        printf("INVALID\n");
+        printf("INVALID Length Error\n");
     }
 
     else
@@ -41,30 +41,29 @@ int main(void)
 
         if(sum % 10 == 0)
         {
-            if( (ccnholder >= 34e15 && ccnholder < 35e13) || (ccnholder >= 37e15 && ccnholder < 38e15) )
+            if( ((ccnholder >= 34e13) && (ccnholder < 35e13)) || ((ccnholder >= 37e13) && (ccnholder < 38e13)) )
             {
             printf("AMEX\n");
             }
-            else if( (ccnholder >= 4e13 && ccn < 5e13) || ( ccnholder >= 4e16 && ccn < 5e16) )
+            else if( ((ccnholder >= 4e12) && (ccnholder < 5e12)) || ( (ccnholder >= 4e15) && (ccnholder < 5e15)) )
             {
             printf("VISA\n");
             }
-            else if(ccn >= 51e16 && ccn < 56e16)
+            else if((ccnholder >= 5.1e15) && (ccnholder < 5.6e15))
             {
             printf("MASTERCARD\n");
             }
             else
             {
-            printf("INVALID front 2 numbers");
-            printf("%li\n", ccnholder);
+            printf("INVALID Error 2\n");
+            //printf("%li\n", ccnholder); //test line
             }
         }
         else
         {
-            printf("INVALID from Alrogrithm\n");
-            printf("%i\n", sum);
-
+            printf("INVALID Error 1\n");
+            //printf("%i\n", sum); //test line
         }
     }
 }
-//correct needs testing
+// Tested and functions exactly as required!
