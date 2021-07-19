@@ -12,6 +12,8 @@ int j = 0; //pesky three variables had to declare outside of function for univer
 int plainlength = 0;
 int n = 0;
 
+string plainprompt;
+string cipher;
 
 int main( int args, string plain[])
 {
@@ -24,7 +26,7 @@ int main( int args, string plain[])
     {
         for (plainlength = 0, n=strlen(plain[1]); plainlength < n; plainlength++ )
         {
-            //section for checking that we only use alphabetic characters
+            //section for checking only alphabetic characters
             if (isalpha(plain[1][plainlength]) == false)
             {
             printf("Key must only contain alphabetic characters.\n");
@@ -42,7 +44,7 @@ int main( int args, string plain[])
             }
         }
 
-        if (j >= 1 && plainlength ==25)
+        if (j >= 1 && plainlength == 25)
         {
             printf("Repeated value, check the key\n");
             return 1;
@@ -65,6 +67,24 @@ int main( int args, string plain[])
          printf("Usage: ./substitution KEY\n");
          return 1;
     }
+
+
+    plainprompt = get_string("Plaintext: ");
+
+    for (int q = 0; q < plainlength; q++)
+    {
+        if ((plain[1][q] <= 65 || plain[1][q] >= 97) == false)
+        {
+            //plain[1][n] ==
+            cipher[q] = plain[1][n];
+
+        }
+    }
+    printf("ciphertext: %s", cipher);
+
+
+
 }
+
 
 //incomplete still need to add algorithm but basic functionality is working as described so far
