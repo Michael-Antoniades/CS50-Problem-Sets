@@ -11,6 +11,8 @@
 int j = 0; //pesky three variables had to declare outside of function for universal usage
 int plainlength = 0;
 int n = 0;
+int i;
+int m;
 
 string plainprompt;
 string cipher;
@@ -24,7 +26,7 @@ int main( int args, string plain[])
     }
     else if (args == 2)
     {
-        for (plainlength = 0, n=strlen(plain[1]); plainlength < n; plainlength++ )
+        for (plainlength = 0, n = strlen(plain[1]); plainlength < n; plainlength++ )
         {
             //section for checking only alphabetic characters
             if (isalpha(plain[1][plainlength]) == false)
@@ -33,10 +35,15 @@ int main( int args, string plain[])
             return 1;
             }
 
-        for (int i =0; i < plainlength; i++) //this section to make sure no repeats present
+        for (i =0; i < plainlength+1; i++) //this section to make sure no repeats present
         {
-            for(int m = 0; m < plainlength; m++)
+            if (isupper(plain[1][i]))
             {
+                plain[1][i] = tolower(plain[1][i]);
+            }
+            for(m = 0; m < plainlength+1; m++)
+            {
+
                 if (plain[1][i] == plain[1][m])
                 {
                     j++;
@@ -44,9 +51,12 @@ int main( int args, string plain[])
             }
         }
 
-        if (j >= 1 && plainlength == 25)
+        if (j >= 352 && plainlength == 25) //strange value for J tested with the below prints to see what different cases look like
         {
-            printf("Repeated value, check the key\n");
+            printf("%i\n",j);
+            printf("%i\n",i);
+            printf("%i\n",m);
+            printf("Repeated value, check the key %s\n", plain[1]);
             return 1;
         }                                   //end section
 
@@ -85,6 +95,7 @@ int main( int args, string plain[])
 
 
 }
+
 
 
 //incomplete still need to add algorithm but basic functionality is working as described so far
