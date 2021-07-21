@@ -17,6 +17,9 @@ int m;
 string plainprompt;
 string cipher;
 
+
+
+//starting program section and collecting/checking if cipher is 26 characters or if there are repeats and outputing error type
 int main( int args, string plain[])
 {
 
@@ -62,7 +65,6 @@ int main( int args, string plain[])
 
             if (plainlength == 25 && j == 0 )
             {
-                printf("wedid itt we did itt joeeeee\n");
                 return 0;
             }
             else if (plainlength == strlen(plain[1])-1 && plainlength != 25)
@@ -78,24 +80,46 @@ int main( int args, string plain[])
          return 1;
     }
 
+    //user prompt and cipher calculation below
 
-    plainprompt = get_string("Plaintext: ");
+    string abc = "abcdefghijklmnopqrstuvwxyz";
+    string prompt = get_string("Plaintext: ");
+    int PL = strlen(prompt);
+    char ciphertext[PL];
 
-    for (int q = 0; q < plainlength; q++)
+    for (int q = 0; q < PL; q++)
     {
-        if ((plain[1][q] <= 65 || plain[1][q] >= 97) == false)
+        if (isupper(prompt[q]) != 0)
         {
-            //plain[1][n] ==
-            cipher[q] = plain[1][n];
+            for (j = 0; j < 26; j++)
+            {
+                if(abc[j] == tolower(prompt[q]))
+                {
+                    ciphertext[q] = toupper(plain[1][j]);
+                    break;
+                }
+            }
+        }
 
+        else if (islower(prompt[q]))
+        {
+            for (j = 0; j < 26; j++)
+            {
+                if(abc[j] == prompt[q])
+                {
+                    ciphertext[q] = plain[1][j];
+                    break;
+                }
+            }
+        }
+
+        else
+        {
+        ciphertext[q] = prompt[q];
         }
     }
-    printf("ciphertext: %s", cipher);
-
-
+    printf("ciphertext: %s\n", ciphertext);
 
 }
 
-
-
-//incomplete still need to add algorithm but basic functionality is working as described so far
+//Completed 
