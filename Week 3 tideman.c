@@ -115,18 +115,15 @@ bool vote(int rank, string name, int ranks[])
 // Update preferences given one voter's ranks
 void record_preferences(int ranks[])
 {
-    for(int i = 0; i < candidate_count; i++)
+    for (int i = 0; i < candidate_count; i++)
     {
         for (int j = 0; j < candidate_count; j++)
         {
-            if (i == j)
-            {
-                preferences[i][j] == 0;
-            }
-            else
-            {
-                if ( ranks [i] > ranks [j] )
-            }
+          if( j > i)
+          {
+              preferences[ranks[i]][ranks[j]]++; //HARDEST part of problem make sure to remember steps taken to get here
+          }
+
         }
     }
     return;
@@ -135,28 +132,99 @@ void record_preferences(int ranks[])
 // Record pairs of candidates where one is preferred over the other
 void add_pairs(void)
 {
-    // TODO
+    pair_count = 0; //make sure we are initialized to 0
+
+    for(int i = 0; i < candidate_count; i++)
+    {
+        for (int j = 0; j < candidate_count; j++)
+        {
+            if (preferences[i][j] > preferences[j][i]) //pass through the array again, compare i with j and inverse will tell us our pairs
+            {
+                pairs[pair_count].winner = i; //could do inverse of this if we flip greater than sign, but this covers all cases either way
+                pairs[pair_count].loser = j;
+                pair_count++; // tested to iterate count of (candidate_count - 1) times, so we always have the right number of pairs array
+            }
+        }
+    }
     return;
 }
 
 // Sort pairs in decreasing order by strength of victory
 void sort_pairs(void)
 {
-    // TODO
+    for(int i = 0; i < pair_count; i++)
+    {
+        int max = i;
+        for (int j = i + 1; j < pair_count; j++)
+        {
+            if (preferences[pairs[j].winner][pairs[j].loser] > preferences[pairs[max].winner][pairs[max].loser])
+            {
+                max = j;
+            }
+        }
+    pair holder = pairs[i];
+    pairs[i] = pairs[max];
+    pairs[max] = holder; //bubble sort in these 3 steps, goes through i and j worst case scenario n^2 number of times
+    }
     return;
 }
 
+bool circle(int winner, int loser) //checks for cycle iteratively in lockpairs
+{
+    if (loser == winner)
+    {
+        return true;
+    }
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if(locked[i][winner])
+        {
+            return circle(i, loser);
+        }
+    }
+    return false;
+
+}
 // Lock pairs into the candidate graph in order, without creating cycles
 void lock_pairs(void)
 {
-    // TODO
+    for ( int i = 0; i < pair_count; i++)
+    {
+        if (!circle(pairs[i].winner, pairs[i].loser)) //once check is complete, can assign value to 2d locked array
+        {
+            locked[pairs[i].winner][pairs[i].loser] = true;
+        }
+    }
+
     return;
 }
 
 // Print the winner of the election
 void print_winner(void)
 {
-    // TODO
+    for (int i = 0; i < candidate_count; i++)
+    {
+        bool loser = false;
+        for (int j = 0; j < candidate_count; j++)
+        {
+            if (locked[j][i])
+            {
+                loser = true;
+                break;
+            }
+
+        }
+
+        if (loser)
+        {
+            continue;
+        }
+        if(!loser)
+        {
+            printf("%s\n", candidates[i]);
+        }
+    }
     return;
 }
 
+//completed 
