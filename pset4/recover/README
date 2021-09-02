@@ -1,0 +1,2 @@
+Recover takes in raw file and verifies that there are 50 lost jpegs in raw based on jpeg block signatures (aligned due to FAT) 
+Also may contain 0s in memory in "slack" at the end of each jpeg if it doesn't fill 512 Bytes
