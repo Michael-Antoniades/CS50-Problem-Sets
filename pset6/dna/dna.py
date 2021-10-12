@@ -1,98 +1,77 @@
 from sys import argv
 import math
 from cs50 import get_string
-import csv
+from csv import reader, DictReader
 import re 
 
 def main():
-    
-    if len(argv) == 3:
-        with open(argv[1] , "r" , newline = '' ) as file:
-            reader = csv.reader(file)
-            for line in reader:
-                header = line #gives us our header line which is excluded from comp_array not sure why
-                people_array = list(reader) # populates an array of all information minus header
-            #dict_from_csv = {line[0]:line[1:len(line)] for line in reader} #very powerful line of code 
+
+if len(argv) < 3 or len(argv) > 4:
+    print("Proper usage is: python dna.py data.csv sequence.txt")
+    exit()
+
+# read the dna sequence
+with open(argv[2] , "r" , newline = '') as dnafile:
+    dnareader = reader(dnafile)
+    for row in dnareader:
+        dnalist = row
+            #dict_from_csv = {line[0]:line[1:len(line)] for line in reader} #very powerful line of code used at first
             # I had a for loop seperate to start for line in reader:, and could successfully loop through CSV
             # but was having trouble assigning it to an array, was able to make this dynamic array with csv data AND 
             # have for loop within it.  Found this helpful reference: https://www.delftstack.com/howto/python/python-csv-to-dictionary/
-            
-        with open(argv[2] , "r") as file2:
-            reader = csv.reader(file2)
-            
-            for line in reader:
-                sequence = list(line)
-                #print(sequence[0]) #test line works as intended
-                sequence_max= (len(sequence[0]))
-        
-        #print(sequence)
+# store it in an array
+dna = dnalist[0]
+sequences = {}
+#extract the DNA we'd like to match from argument 1, our database
+with open(argv[1] , "r") as peoplefile:
+    people = reader(peoplefile)
+    for row in people:
+        dnaSequences = row
+        dnaSequences.pop(0)
+        break
     
-        header_length = len(header) #for loop to iterate from 1 to 8 like our header file and count each occurence in sequence
-        match_array = []
-        print(header)
-        print(header[3])
-        for i in range(1,header_length,1):
-            
-            x = sequence[0].count(header[i]) 
-            match_array.append(x) # returns an array that is full of all the counts we need
-        #print(match_array)
-        #print(people_array)
-        
-        number_of_people = len(people_array)
-        people_count = number_of_people
-       #print(people_array)
-        print(match_array)
-        print(people_array[1][1:header_length])
-    
-        arrayk = [31, 21, 41, 28, 30, 9, 36, 44]
-        arrayj = [31, 21, 41, 28, 30, 9, 36, 44]
-        #print(arrayk)
-        
-        if arrayj == arrayk:
-            print("ilovelamp")
-        
-        for m in range(0,people_count,1): 
-            #print(people_array[m][1:header_length])
-            if people_array[m][1:header_length] == match_array:
-                print(people_array[m][0])
-            #else:
-                #print("oops")
-        
-  
-        
-        
-        #key,val = dict_from_csv.items()[0]
-        #for value in dict_from_csv.values():
-         #   if value =
-        #sequence = dict_from_csv.get(0)
-        #print(sequence)
-        #for key, value in dict_from_csv.items():
+# create dnaSequence dictionary, initialize to 0.  keys will be database sequences
+for item in dnaSequences:
+    sequences[item] = 0
+   
+# iterate trough the dna sequence, when repititions are found, the sequence dictionary are counted
+for key in sequences:
+    l = len(key)
+    tempMax = 0
+    temp = 0
+    for i in range(len(dna)):
+        # Logic for counting that sequence and then tells us to go onto next one 
+        while temp > 0:
+            temp -= 1
+            continue
+        # if the segment of dna corresponds to the key and there is a repetition we increase our count
+        if dna[i: i + l] == key:
+            while dna[i - l: i] == dna[i: i + l]: #repitition logic
+                temp += 1
+                i += l
 
-            #print(value)
-            #print(len(value))
-            #if key == "name":
-                #break
-                
-                #this section for a dictionary approach which turned out to not be as easy
-        
-            
-            
-                
-                
-                
-        
-        #sys.exit(0)
-    
-    
-    
-    
-    
-    
-    
-    
-    elif len(argv) != 3:               
-        #moved this non-3 argv case at the bottom of main to keep it out of the way 
-        print("Proper usage is: python dna.py data.csv sequence.txt")
-        #sys.exit(1)
+            # compares the value to the previous longest sequence to the longest
+            if temp > tempMax:
+                tempMax = temp
+
+    # stores new longest key
+    sequences[key] += tempMax
+
+# open and iterate trough the database of people treating each one like a dictionary so it can compare to the sequences one
+with open(argv[1], "r") as peoplefile:
+    people = DictReader(peoplefile)
+    for person in people:
+        match = 0
+        # compares the sequences to every person and prints name before leaving the program if there is a match
+        for dna in sequences:
+            if sequences[dna] == int(person[dna]):
+                match += 1
+        if match == len(sequences):
+            print(person['name'])
+            exit()
+
+
+    print("No match")
+
 if __name__ == "__main__":
     main()
