@@ -1,1 +1,6 @@
-Placeholder for now
+Usage of pipping in our sql detective techniques with sqlite3 fiftyville.db provided for this assignment:
+https://cs50.harvard.edu/x/2021/psets/7/fiftyville/
+
+Using:
+cat log.sql | sqlite3 fiftyville.db
+in CS50 IDE to pipe in our log
