@@ -8,7 +8,6 @@ long numdigits;
 int numsumtot;
 
 
-
 int main(void)
 {
 
